@@ -17,3 +17,5 @@ module lensHolder(lensD=1,height=10){
   }
 }
 
+
+lensHolder(lensD=1,height=3);

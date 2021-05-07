@@ -1,2 +1,5 @@
 # CAD Files
 *.stl
+
+# vim temp
+*.swp
