@@ -3,7 +3,7 @@
 //-- Moorman Lab, University of Massachusetts Amherst
 //-- v1.1 - March 2021
 
-use <utils.scad>
+use <utils.scad>;
 
 module wing() {
   difference(){
@@ -82,10 +82,8 @@ module basePlate (lensD=.5,bottomTick=0.25,gap=.5,sleeve=false) {
 module cap(sleeve=false) {
   //sleeve: true if miniscope is using sleeve, false otherwise
 
-  holeL = (sleeve==true ? 5.0 : 4.0); // 5.06 or 4.96
   p1 = (sleeve==true ? 1.5 : 1.0);
 
-  //difference(){
   hull(){
     for(i=[-1,1])
       for(j=[-1,1])
