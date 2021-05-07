@@ -3,7 +3,6 @@
 //-- Moorman Lab, University of Massachusetts Amherst
 //-- v1.0 - March 2021
 
-globShow=false;
 
 module screwM3(Length=1,show=false){
   cylinder(h=Length,d=3.4,$fn=40);
@@ -14,6 +13,7 @@ module screwM3(Length=1,show=false){
     echo("M3 screw [mm]",L=Length);
   }
 }
+
 
 module nutM3(show=false) {
   cylinder(h=2.6,d=6.6,$fn=6,center=true);

@@ -3,7 +3,7 @@
 //-- Moorman Lab, University of Massachusetts Amherst
 //-- v1.0 - March 2021
 
-include <utils.scad>;
+use <utils.scad>;
 
 module miniscopeToStereotax(){
   deltay = 15;
@@ -42,8 +42,8 @@ module miniscopeToStereotax(){
       translate([0,-2,-2])cube([mountSizeW,4,4],center=true);
       rotate([0,90,0])cylinder(h=mountSizeW,d=8,$fn=100,center=true);  
     }
-    translate([mountSizeW/2-1.1,0,0])rotate([0,90,0])nutM3(globShow);
-    translate([-mountSizeW/2+2.8,0,0])rotate([0,90,0])screwM3(mountSizeW-3,globShow);
+    translate([mountSizeW/2-1.1,0,0])rotate([0,90,0])nutM3(show=true);
+    translate([-mountSizeW/2+2.8,0,0])rotate([0,90,0])screwM3(mountSizeW-3,show=true);
     translate([0,0,0])cube([8,10,10],center=true);
   }
   
@@ -63,9 +63,10 @@ module miniscopeToStereotax(){
     cylinder(d=mountSizeD,h=16+.1,center=true,$fn=100);
     translate([0,5.5,0])cube([1.5,14,16+.1],center=true);
     translate([0,7.5,0])rotate([0,90,0])cylinder(d=3.06,h=10,center=true,$fn=100);
-    translate([mountSizeW/2-1,7,0])rotate([0,90,0])rotate([0,0,0])nutM3(globShow);
-    translate([-mountSizeW/2+2.95,7,0])rotate([0,90,0])rotate([0,0,0])screwM3(mountSizeW-3,globShow);
+    translate([mountSizeW/2-1,7,0])rotate([0,90,0])rotate([0,0,0])nutM3(show=true);
+    translate([-mountSizeW/2+2.95,7,0])rotate([0,90,0])rotate([0,0,0])screwM3(mountSizeW-3,show=true);
   }
 }
 
 miniscopeToStereotax();
+
