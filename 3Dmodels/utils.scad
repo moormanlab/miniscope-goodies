@@ -24,3 +24,52 @@ module nutM3(show=false) {
     }
   }
 }
+
+module rrect(size,center=false,fn=64){
+
+  dx = size[0];
+  dy = size[1];
+  dz = size[2];
+
+  if (center==true)
+    _rrect(size,fn);
+  else
+    translate([dx/2,dy/2,dz/2]) _rrect(size,fn);
+
+  module _rrect(size,fn){
+
+    d = min(dx,dy);
+    a = (d == dx ? 0 : 1);
+
+    hull()
+      for(i=[-1,1])
+        translate([a*i*(dx-d)/2,(1-a)*i*(dy-d)/2,0])
+             cylinder(h=dz,d=d,$fn=fn,center=true);
+  }
+
+}
+
+module r2cube(size,center=false,r=0,fn=64){
+
+  dx = size[0];
+  dy = size[1];
+  dz = size[2];
+
+  assert(r>0,"Corner radius must be grater than 0 (otherwise just use cube)");
+  assert(r<=min(dx,dy)/2,"Corner radius must not be greater than min(x,y)/2");
+
+  if (center==true)
+    _r2cube(size,r,fn);
+  else
+    translate([dx/2,dy/2,dz/2]) _r2cube(size,r,fn);
+
+  module _r2cube(size,r,fn){
+
+    hull()
+      for(i=[-1,1])
+        translate([i*(dx/2-r),0,0])
+          rrect([2*r,dy,dz],fn=fn,center=true);
+
+  }
+
+}

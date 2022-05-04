@@ -42,28 +42,45 @@ module prismLensHolder(lensD,height=4){
   }
 }
 
-
-module slideHolder(){
+module slideHolder(L=80,T=1.4){
   difference(){
-    rotate([0,-90,0])cylinder(h=80,d=18,center=true,$fn=3);
-    translate([0,0,6])cube([81,1.1,15],center=true);
-    translate([0,0,0])cube([81,3,3],center=true);
-    translate([0,0,7])cube([81,4,3],center=true);
+    rotate([0,-90,0])cylinder(h=L,d=18,center=true,$fn=3);
+    translate([0,0,6])cube([L+1,T,15],center=true);
+    translate([0,0,0])cube([L+1,3,3],center=true);
+    translate([0,0,7])cube([L+1,4,3],center=true);
   }
 }
 
 
-module prismBase(lensD=1,thick=2,height=8){
-  slW = 1.2;     // width of the encoder strip
+module prismBase(lensD=1,thick=1.5,height=8){
+  slW = 1.4;     // width of the encoder strip //updated 210625
   slDist = .15; // focal distance of the lens
-  dx = 4 + lensD;
-  capThick = 0.7;  //should be the same as in cap prismLensHolder
+  dx = 5 + lensD;
+  dy = 6 + lensD;
+  closeL = 2+lensD/2+.2;
   difference(){
-    translate([0.25,0,height/2])cube([dx+.5,dx,height],center=true);
-    translate([0,0,height-thick+capThick])rotate([180,0,0])scale([1,6,1])prism(lensD+1);
-    // opening for lens holder
-    translate([0,0,height-thick+capThick-.01])cylinder(h=thick-capThick+.02,d=lensD+1.6,$fn=64);
-    translate([(lensD+slW)/2+0.05/2+slDist,0,height/2-thick+capThick])cube([slW,dx+1,height],center=true);
+    translate([0.5,0,height/2])cube([dx,dy,height],center=true);
+    translate([0,0,height-thick])rotate([180,0,0])scale([1,6,1])prism(lensD+1);
+    // opening for cap
+    translate([0,0,height-thick-.01]) {
+      cylinder(h=thick+.02,d=lensD+.1,$fn=64);
+      translate([-closeL+.05,-lensD/2-1,-.15])cube([closeL,lensD+2,thick+.5]);
+      translate([-closeL/2,0,.15])cube([closeL,lensD+4,.6],center = true);
+    }
+    translate([(lensD+slW)/2+0.05/2+slDist,0,height/2-thick])cube([slW,dy+1,height],center=true);
+    translate([(lensD+slW)/2+0.05/2,0,(height-thick-lensD-1.5)/2+1.5])cube([slW,dy+1,height-thick-lensD-1.5],center=true);
+  }
+}
+
+module prismBaseCap(lensD=1,thick=1.5) {
+  closeL = 2+lensD/2+.2;
+  translate([0,0,-thick/2-.05])difference(){
+    translate([-closeL/2,0,0])union() {
+      r2cube([closeL,lensD+1.9,thick+.1],r=.4,center=true);
+      translate([-closeL/2+.5,0,thick/2+.25])cube([1,lensD+.5,.5],center=true);
+      translate([-.1,0,-.3])r2cube([closeL-.2,lensD+3.9,.55],r=.5,center=true);
+    }
+    cylinder(h=thick+.2,d=lensD+.1,$fn=64,center=true);
   }
 }
 
@@ -71,3 +88,7 @@ module slidePattern(){
   translate([0,-2.5,0])cube([1.1,5,5.1]);
   for (i=[-5:5]) translate([0,i/10,4.3])cube([.1,.05,1.5],center=true);
 }
+
+// for printing
+*rotate([0,90,0]) prismBase(1,1,6);
+*rotate([0,-90,0]) prismBaseCap(1,1);

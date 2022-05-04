@@ -57,6 +57,8 @@ module basePlate (lensD=.5,bottomTick=0.25,gap=.5,sleeve=false) {
       translate([0,-1-holeL/2-wallThick,.5])wing();
       for (i=[0:3])rotate([0,0,i*90])translate([0,-1-holeL/2-wallThick,.5])wing();
       for (i=[0:2])rotate([0,0,i*90-135])translate([0,-1-holeL/2-wallThick,1.5])wing();
+      for (i=[0:3])for (j=[0:2:bottomTick-2])rotate([0,0,i*90])translate([0,-1-holeL/2-wallThick,-j-1.5])wing();
+      for (i=[0:3])for (j=[0:2:bottomTick-1])rotate([0,0,i*90-135])translate([0,-1-holeL/2-wallThick,-j-.5])wing();
       
       //lens guide
       translate([0,0,-bottomTick-guideL/2])cylinder(h=guideL,d2=max(2,lensD+1.2),d1=lensD+.8,$fn=100,center=true);      
@@ -70,7 +72,7 @@ module basePlate (lensD=.5,bottomTick=0.25,gap=.5,sleeve=false) {
     }
 
     //lens hole
-    translate([0,0,-2])cylinder(h=5,d=lensD+.2,$fn=100, center=true);
+    translate([0,0,-bottomTick/2-guideL/2])cylinder(h=guideL+bottomTick+.2,d=lensD+.2,$fn=100, center=true);
     
     //screw hole
     translate([(sqrt(2)+holeL/2-1)*sin(45)-.5,(sqrt(2)+holeL/2-1)*sin(45)-.5,1.25+gap])rotate([0,90,45])cylinder(h=setScrewL+1,d=setScrewD,$fn=100);
